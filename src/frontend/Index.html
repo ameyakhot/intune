@@ -15,7 +15,7 @@
         <div class="audio-player">
             <!-- Audio player -->
             <audio id="audio-player" controls>
-                <source src="http://localhost:8000/stream-audio" type="audio/mp3">
+                <source src="http://54.210.71.121:8000/stream-audio" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>
         </div>
@@ -23,8 +23,9 @@
 
     <script>
         // Fetch data from the FastAPI API
-        fetch('http://localhost:8000/dummy-api')
+        fetch('http://54.210.71.121:8000/dummy-api')
             .then(response => response.json())
+            .then(data => console.log(data))
             .then(data => {
                 // Update song title and artist name
                 document.getElementById('song-title').textContent = data.song_title;

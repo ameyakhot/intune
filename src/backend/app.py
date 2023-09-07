@@ -10,7 +10,7 @@ app = FastAPI()
 # Configure CORS (Cross-Origin Resource Sharing)
 origins = [
     "http://127.0.0.1:5500",  # Add your frontend origin here
-    # You can add more origins as needed
+     "http://192.168.0.136"
 ]
 
 app.add_middleware(
