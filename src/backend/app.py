@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 import os
+import boto3
+import io
 
 app = FastAPI()
 
@@ -19,6 +21,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Initialize the AWS S3 client
+s3 = boto3.client('s3')
+
+# Define your S3 bucket name and the audio file key
+s3_bucket_name = 'intune-music-files'
+audio_file_key = 'mb_space_cadet.mp3'
+
 @app.get("/dummy-api")
 def get_dummy_api():
     return {
@@ -31,17 +40,20 @@ def get_dummy_api():
 
 @app.get("/stream-audio")
 def stream_audio():
-    # Path to the audio file
-    audio_file_path = os.path.join("media", "mb_space_cadet.mp3")
+    try:
+        # Retrieve the audio file from S3
+        audio_file = s3.get_object(Bucket=s3_bucket_name, Key=audio_file_key)
+        
+        # Get the audio file's data
+        audio_data = audio_file['Body'].read()
 
-    # Check if the file exists
-    if not os.path.exists(audio_file_path):
+        # Set the Content-Type header to indicate audio/mp3
+        headers = {
+            "Content-Type": "audio/mp3"
+        }
+
+        # Stream the file using FastAPI's StreamingResponse
+        return StreamingResponse(io.BytesIO(audio_data), headers=headers)
+    
+    except Exception as e:
         return "Audio file not found", 404
-
-    # Set the Content-Type header to indicate audio/mp3
-    headers = {
-        "Content-Type": "audio/mp3"
-    }
-
-    # Stream the file using FastAPI's FileResponse
-    return FileResponse(audio_file_path, headers=headers)
