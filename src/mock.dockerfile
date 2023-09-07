@@ -1,4 +1,3 @@
-  GNU nano 5.8                                                                                  mock.dockerfile                                                                                             
 # Use an official Python runtime as a base image
 FROM python:3.9
 
