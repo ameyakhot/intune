@@ -12,25 +12,35 @@
             <h2 id="song-title">Loading...</h2>
             <p id="artist-name">Loading...</p>
         </div>
-        <div class="audio-player">
-            <!-- Audio player -->
+        <!-- Playback music from s3 mp3 file -->
+        <!-- <div class="audio-player">
+            Audio player
             <audio id="audio-player" controls>
                 <source src="http://54.210.71.121:8000/stream-audio" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>
-        </div>
+        </div> -->
     </div>
 
     <script>
         // Fetch data from the FastAPI API
         fetch('http://54.210.71.121:8000/dummy-api')
             .then(response => response.json())
-            .then(data => console.log(data))
             .then(data => {
                 // Update song title and artist name
                 document.getElementById('song-title').textContent = data.song_title;
                 document.getElementById('artist-name').textContent = data.artist_name;
-                // You can also update other elements here based on the API response
+                
+                // You can also update other elements based on the API response
+                // For example, you can add logic to display a play button if is_playing is true.
+
+                // Example:
+                // if (data.is_playing) {
+                //     // Display the play button
+                //     document.getElementById('play-pause-button').textContent = 'Pause';
+                // }
+
+                // You can add more logic here as needed.
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

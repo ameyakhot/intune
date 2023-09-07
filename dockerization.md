@@ -14,3 +14,8 @@ docker rm mock-msc
 
 <!-- image -->
 docker rmi backend-mock-msc
+
+<!-- AWS - Docker -->
+apt-get install awscli
+
+aws configure
