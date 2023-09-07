@@ -18,11 +18,11 @@ RUN pip install boto3
 RUN pip install -r requirements.txt
 
 # Install AWS Config
-RUN apt-get install awscli
+# RUN apt-get install awscli
 
-RUN aws configure set aws_access_key_id AKIAX7PBSZEHX75OIE7N
-RUN aws configure set aws_secret_access_key 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
-RUN aws configure set region use-east-2
+# RUN aws configure set aws_access_key_id AKIAX7PBSZEHX75OIE7N
+# RUN aws configure set aws_secret_access_key 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
+# RUN aws configure set region use-east-2
 
 # Expose the port that FastAPI will run on
 EXPOSE 8000
